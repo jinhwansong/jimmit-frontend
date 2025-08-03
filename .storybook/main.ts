@@ -12,5 +12,19 @@ const config: StorybookConfig = {
     name: '@storybook/nextjs',
     options: {},
   },
+  webpackFinal: async (config) => {
+    // SVG 파일을 텍스트로 처리 (React 컴포넌트 대신)
+    if (config.module) {
+      config.module.rules = [
+        ...(config.module.rules || []),
+        {
+          test: /\.svg$/,
+          issuer: /\.[jt]sx?$/,
+          type: 'asset/source', // SVG를 텍스트로 처리
+        },
+      ];
+    }
+    return config;
+  },
 };
 export default config;
