@@ -20,7 +20,11 @@ export default function CardItem({
   isFirst = false,
 }: CardItemProps) {
   return (
-    <Link key={item.id} href={`/group/${item.id}?tab=recruit`}>
+    <Link
+      key={item.id}
+      href={`/group/${item.id}?tab=recruit`}
+      className="min-h-[396px]"
+    >
       <div className="pc:aspect-[8/5] tab:aspect-[87/25] relative aspect-[343/200] overflow-hidden rounded-lg">
         {isLike && <Like item={item} />}
         <Card.Thumbnail

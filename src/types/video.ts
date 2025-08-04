@@ -23,6 +23,10 @@ export interface VideoItem {
   duration: string;
 }
 
+export interface VideoUploadItem extends VideoItem {
+  message: string;
+}
+
 export interface WeekTopVideo {
   id: string;
 }
