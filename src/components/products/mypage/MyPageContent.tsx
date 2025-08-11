@@ -13,22 +13,24 @@ import {
 import { usePrefetchedCount } from '@/hooks/queries/gather/usePrefetchedCoint';
 import { useReviewToWriteInfiniteQuery } from '@/hooks/queries/review/usePrefetchReview';
 import { useReviewInfiniteQuery } from '@/hooks/queries/review/useReviewInfiniteQuery';
-import { userVideoCountQuery } from '@/hooks/queries/video/useUserVideoCountQuery';
+// import { userVideoCountQuery } from '@/hooks/queries/video/useUserVideoCountQuery';
+
 import { useQueryTab } from '@/hooks/useQueryTab';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 import GatheringList from './gather/GatheringList';
 import GatheringListComponents from './gather/GatheringListComponents';
 import MyReview from './review/MyReview';
-import MyVideo from './video/MyVideo';
+// import MyVideo from './video/MyVideo';
+
 import { useUserStore } from '@/stores/useUserStore';
 
 type TabKey =
   | 'participating'
   | 'created'
   | 'reviews_received'
-  | 'reviews_towrite'
-  | 'video';
+  | 'reviews_towrite';
+// | 'video';
 
 export default function MyPage() {
   const { activeTab, setTab } = useQueryTab<TabKey>('tab', 'participating', [
@@ -36,19 +38,19 @@ export default function MyPage() {
     'created',
     'reviews_received',
     'reviews_towrite',
-    'video',
+    // 'video',
   ]);
   const { user, isLoaded, isRefreshing } = useUserStore();
   const isQueryReady = isLoaded && !isRefreshing && !!user;
 
   const participatingCount = usePrefetchedCount({
-    ...gatherMeParticipantsQuery({ page: 0, size: 1, includeCanceled: true }),
+    ...gatherMeParticipantsQuery({ page: 0, size: 1, includeCanceled: false }),
     selector: (data) => data.totalElements,
     enabled: isQueryReady,
   });
 
   const createdCount = usePrefetchedCount({
-    ...gatherMeCreateQuery({ page: 0, size: 1, includeCanceled: true }),
+    ...gatherMeCreateQuery({ page: 0, size: 10, includeCanceled: false }),
     selector: (data) => data.totalElements,
     enabled: isQueryReady,
   });
@@ -67,11 +69,11 @@ export default function MyPage() {
     enabled: isQueryReady,
   });
 
-  const videoCount = usePrefetchedCount({
-    ...userVideoCountQuery(),
-    selector: (data) => data.count,
-    enabled: isQueryReady,
-  });
+  // const videoCount = usePrefetchedCount({
+  //   ...userVideoCountQuery(),
+  //   selector: (data) => data.count,
+  //   enabled: isQueryReady,
+  // });
 
   const reviewCount = review?.pages[0].totalElements ?? 0;
 
@@ -123,14 +125,14 @@ export default function MyPage() {
         count: writeCount,
         component: <ReviewsToWrite />,
       },
-      {
-        key: 'video',
-        label: '재밋 후기',
-        count: videoCount,
-        component: <MyVideo />,
-      },
+      // {
+      //   key: 'video',
+      //   label: '재밋 후기',
+      //   count: videoCount,
+      //   component: <MyVideo />,
+      // },
     ],
-    [participatingCount, createdCount, reviewCount, writeCount, videoCount],
+    [participatingCount, createdCount, reviewCount, writeCount], // videoCount 제거됨 마지막 의존성 배열에 추가해야 됨.
   );
 
   const tabClass = (isActive: boolean) =>
