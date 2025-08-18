@@ -6,6 +6,7 @@ export interface RecruitPageProps {
   defaultSessions: BandSession[];
   showShareModal?: boolean;
   shareGroupId?: string;
+  defaultSort?: string;
 }
 
 export interface RecruitResponse {

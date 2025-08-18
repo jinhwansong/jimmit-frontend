@@ -26,7 +26,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const queryClient = new QueryClient();
   const defaultGenres: Genre[] = [];
   const defaultSessions: BandSession[] = [];
-  const defaultSort = '';
+  const defaultSort = 'recruitDeadline,desc';
 
   await prefetchCommonInfiniteQuery({
     queryClient,
@@ -38,6 +38,7 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <RecruitPage
+        defaultSort={defaultSort}
         defaultGenres={defaultGenres}
         defaultSessions={defaultSessions}
         showShareModal={resolvedSearchParams.showShareModal === 'true'}

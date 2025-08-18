@@ -1,7 +1,5 @@
 'use client';
 
-import { GatheringCard } from '@/types/card';
-import { ReviewItem } from '@/types/review';
 import Image from 'next/image';
 import { forwardRef, Fragment, ReactNode, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -40,7 +38,7 @@ interface InfinityScrollProps<T> {
   isInitialLoading?: boolean;
 }
 
-export default function InfinityScroll<T>({
+export default function InfinityScroll<T extends { id: string | number }>({
   list,
   item,
   emptyText,
@@ -95,7 +93,7 @@ export default function InfinityScroll<T>({
       <Fragment>
         <Virtuoso
           useWindowScroll
-          computeItemKey={(index) => (list[index] as ReviewItem).id ?? index}
+          computeItemKey={(index) => list[index]?.id ?? index}
           totalCount={list.length}
           itemContent={(index) => item(list[index], index)}
           className={className}
@@ -109,7 +107,7 @@ export default function InfinityScroll<T>({
       <VirtuosoGrid
         totalCount={list.length}
         useWindowScroll
-        computeItemKey={(index) => (list[index] as GatheringCard)?.id ?? index}
+        computeItemKey={(index) => list[index]?.id ?? index}
         components={{
           List: DynamicGridList,
           Item: ({ children, ...props }) => <div {...props}>{children}</div>,
