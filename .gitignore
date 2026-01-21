@@ -48,3 +48,5 @@ next-env.d.ts
 # Ignore Cursor rules and mdc files
 .cursor/
 *.mdc
+
+README2.md
