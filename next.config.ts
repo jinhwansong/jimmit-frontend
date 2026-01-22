@@ -25,20 +25,20 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
     minimumCacheTTL: 31536000,
   },
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
-  },
   webpack(config) {
-    // 일반 웹팩 모드에서도 동작하도록
+    // 기존 SVG 규칙 찾기 및 제거
+    const fileLoaderRule = config.module.rules.find((rule: { test?: RegExp }) =>
+      rule.test?.test?.('.svg'),
+    );
+
+    if (fileLoaderRule && 'exclude' in fileLoaderRule) {
+      fileLoaderRule.exclude = /\.svg$/i;
+    }
+
+    // SVG를 React 컴포넌트로 변환
     config.module.rules.push({
-      test: /\.svg$/,
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
     });
     return config;
@@ -46,26 +46,19 @@ const nextConfig: NextConfig = {
 };
 
 export default withSentryConfig(nextConfig, {
-  org: 'jimmit',
+  org: 'jimmit-fz',
+
   project: 'javascript-nextjs',
 
-  // CI 환경이 아닐 때는 로그를 숨깁니다.
   silent: !process.env.CI,
-
-  // 클라이언트 측 소스 맵 업로드 범위 확장
   widenClientFileUpload: true,
-
-  // Sentry가 엣지/미들웨어에서 Node.js 전용 모듈을 찾지 않도록 차단
-  bundleSizeOptimizations: {
-    excludeDebugStatements: true,
-  },
-
-  // 엣지 런타임에서 문제를 일으키는 로거와 터널 설정을 더 안전하게 관리
-  disableLogger: true,
-
-  // 터널링 주소 (이게 때때로 엣지 환경에서 충돌을 줍니다)
   tunnelRoute: '/monitoring',
 
-  // 자동 모니터링 활성화
-  automaticVercelMonitors: true,
+  webpack: {
+    automaticVercelMonitors: true,
+
+    treeshake: {
+      removeDebugLogging: true,
+    },
+  },
 });
