@@ -11,7 +11,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'aws-1-ap-northeast-2.pooler.supabase.com',
+        hostname: 'tdpigwjkpkeybdnxxbgr.supabase.co',
+        port: '',
       },
       {
         protocol: 'https',
