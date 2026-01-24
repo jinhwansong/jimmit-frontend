@@ -36,6 +36,7 @@ export default function RecruitPage({
 
   const { data, fetchNextPage, hasNextPage, isFetching } =
     useCommonInfiniteQuery(filters);
+  console.log(data);
   const flatData = data?.pages.flatMap((page) => page.gatherings) ?? [];
 
   const handleModalClose = () => {
