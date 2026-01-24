@@ -29,7 +29,7 @@ export default function Footer({
   id,
   page,
 }: FooterProps) {
-  const text = `${totalRecruit}/${totalCurrent}`;
+  const text = `${totalCurrent}/${totalRecruit}`;
   const cardStatus = getRecruitStatus(
     recruitDeadline as string,
     totalCurrent,
