@@ -3,11 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "browserslist": [
-    "last 1 year",
-    "not dead",
-    "not op_mini all"
-  ],
+  "browserslist": {
+    "production": [
+      "last 2 Chrome versions",
+      "last 2 Firefox versions",
+      "last 2 Edge versions",
+      "last 2 Safari versions"
+    ],
+    "development": ["last 1 Chrome version"]
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -14,10 +14,8 @@ export async function initMocks() {
   }
 
   if (typeof window === 'undefined') {
-    // 서버 사이드
-    // console.log('MSW 서버 사이드 초기화');
-    const { server } = await import('./server');
-    server.listen();
+    // 서버 사이드 - server-start.ts에서 이미 listen() 호출됨
+    return;
   } else {
     // 클라이언트 사이드
     // console.log('MSW 클라이언트 사이드 초기화');
