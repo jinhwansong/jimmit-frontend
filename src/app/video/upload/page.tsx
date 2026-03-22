@@ -10,11 +10,16 @@ import {
 } from '@/hooks/queries/video/useVideoUpload';
 import { usePreventScroll } from '@/hooks/usePreventScroll';
 import { useAuthStore } from '@/stores/useAuthStore';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FormProvider, useForm } from 'react-hook-form';
-import Lottie from 'react-lottie-player';
+
+const Lottie = dynamic(
+  () => import('react-lottie-player').then((mod) => mod.default),
+  { ssr: false },
+);
 
 export default function VideoUpload() {
   const router = useRouter();

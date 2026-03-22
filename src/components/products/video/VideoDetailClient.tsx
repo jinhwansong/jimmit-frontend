@@ -18,8 +18,18 @@ import { useDeviceType } from '@/hooks/useDeviceType';
 import { CommentRequest } from '@/types/video';
 import { formatDateToYYMMDD } from '@/utils/formatDate';
 import { useSentryErrorLogger } from '@/utils/useSentryErrorLogger';
-import MuxPlayer from '@mux/mux-player-react';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
+
+const MuxPlayer = dynamic(
+  () => import('@mux/mux-player-react').then((mod) => mod.default),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="aspect-video w-full animate-pulse bg-[#2d2d2d]" />
+    ),
+  },
+);
 import { FormProvider, useForm } from 'react-hook-form';
 import ShareLinkModal from '../group/ShareLinkModal';
 import VideoDetailSkeleton from './VideoDetailSkeleton';
