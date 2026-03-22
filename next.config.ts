@@ -22,7 +22,11 @@ const nextConfig: NextConfig = {
     ];
   },
   experimental: {
-    optimizePackageImports: ['@radix-ui/react-popover', '@radix-ui/react-slot'],
+    optimizePackageImports: [
+      '@radix-ui/react-popover',
+      '@radix-ui/react-slot',
+      '@tanstack/react-query',
+    ],
   },
   images: {
     remotePatterns: [

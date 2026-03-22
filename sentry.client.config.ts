@@ -9,21 +9,12 @@ Sentry.init({
     process.env.NEXT_PUBLIC_SENTRY_DSN ||
     'https://13c31c43a99e0caa84cfed7f32e5ae19@o4510748957278208.ingest.us.sentry.io/4510748958064640',
 
-  // Add optional integrations for additional features
-  integrations: [Sentry.replayIntegration()],
+  // Session Replay 제거 - 초기 번들/네트워크 부담 감소 (필요 시 replayIntegration() 재추가)
+  // integrations: [Sentry.replayIntegration()],
 
-  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-  tracesSampleRate: 1,
+  // 트레이싱 샘플 10% - LCP/번들 부담 감소
+  tracesSampleRate: 0.1,
 
-  // Define how likely Replay events are sampled.
-  // This sets the sample rate to be 10%. You may want this to be 100% while
-  // in development and sample at a lower rate in production
-  replaysSessionSampleRate: 0.1,
-
-  // Define how likely Replay events are sampled when an error occurs.
-  replaysOnErrorSampleRate: 1.0,
-
-  // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
 });
 

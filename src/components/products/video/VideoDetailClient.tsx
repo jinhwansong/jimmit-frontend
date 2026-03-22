@@ -31,8 +31,11 @@ const MuxPlayer = dynamic(
   },
 );
 import { FormProvider, useForm } from 'react-hook-form';
-import ShareLinkModal from '../group/ShareLinkModal';
 import VideoDetailSkeleton from './VideoDetailSkeleton';
+
+const ShareLinkModal = dynamic(() => import('../group/ShareLinkModal'), {
+  ssr: false,
+});
 
 interface prop {
   videoId: string;

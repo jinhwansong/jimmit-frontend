@@ -10,8 +10,12 @@ import { useRouter } from 'next/navigation';
 import { GatheringCard } from '@/types/card';
 import Like from '@/components/commons/Card/Like';
 import ShareIcon from '@/assets/icons/ic_share.svg';
-import ShareLinkModal from './ShareLinkModal';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
+
+const ShareLinkModal = dynamic(() => import('./ShareLinkModal'), {
+  ssr: false,
+});
 import ModalInteraction from '@/components/commons/Modal/ModalInteraction';
 
 interface GroupInfoSectionProps {

@@ -1,12 +1,12 @@
 export default function PreloadResources() {
   return (
     <>
-      {/* 폰트는 로컬(public/fonts) 사용 - LCP용 기본 폰트 preload */}
+      {/* 폰트는 로컬(public/fonts) woff2 - LCP용 기본 폰트 preload */}
       <link
         rel="preload"
-        href="/fonts/Pretendard-Regular.otf"
+        href="/fonts/Pretendard-Regular.woff2"
         as="font"
-        type="font/otf"
+        type="font/woff2"
         crossOrigin="anonymous"
       />
       <link

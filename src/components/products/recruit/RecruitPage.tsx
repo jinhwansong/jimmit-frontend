@@ -3,7 +3,12 @@ import CardItem from '@/components/commons/Card/CardItem';
 import SkeletonItem from '@/components/commons/Card/SkeletonItem';
 import InfinityScroll from '@/components/commons/InfinityScroll';
 import RecruitHeader from '@/components/commons/RecruitHeader';
-import ShareLinkModal from '@/components/products/group/ShareLinkModal';
+import dynamic from 'next/dynamic';
+
+const ShareLinkModal = dynamic(
+  () => import('@/components/products/group/ShareLinkModal'),
+  { ssr: false },
+);
 import { CARD_STATE } from '@/constants/card';
 import { useCommonInfiniteQuery } from '@/hooks/queries/recruit/useRecruit';
 import { RecruitPageProps } from '@/types/recruit';

@@ -4,10 +4,9 @@
   "private": true,
   "type": "module",
   "browserslist": [
-    "chrome >= 90",
-    "firefox >= 90",
-    "safari >= 14",
-    "edge >= 90"
+    "last 2 years",
+    "not dead",
+    "not op_mini all"
   ],
   "scripts": {
     "dev": "next dev",
