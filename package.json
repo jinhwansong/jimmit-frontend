@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "browserslist": [
-    "last 2 years",
+    "last 1 year",
     "not dead",
     "not op_mini all"
   ],

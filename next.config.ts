@@ -26,6 +26,8 @@ const nextConfig: NextConfig = {
       '@radix-ui/react-popover',
       '@radix-ui/react-slot',
       '@tanstack/react-query',
+      'date-fns',
+      'framer-motion',
     ],
   },
   images: {
