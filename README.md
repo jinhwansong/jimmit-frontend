@@ -1,7 +1,7 @@
 ![Image](https://github.com/user-attachments/assets/2fcdd2b1-772e-4a00-b6b6-2428fa3fd44d)
 
 # JAMMIT - 세션 기반 밴드 합주 매칭 플랫폼
-[👉 데모 바로가기](https://jammit-fe-six.vercel.app/)
+[👉 데모 바로가기](https://www.jimmit.store/)
 
 JAMMIT은 정규 밴드처럼 무겁지 않고, 누구나 쉽게 합주의 재미를 경험할 수 있도록 설계된
 세션 기반의 단기 밴드 합주 매칭 플랫폼입니다.

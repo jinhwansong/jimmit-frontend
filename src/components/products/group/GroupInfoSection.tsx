@@ -171,7 +171,7 @@ export default function GroupInfoSection({
       </div>
       {isShareModalOpen && (
         <ShareLinkModal
-          inviteLink={`https://jammit-fe-six.vercel.app/group/${id}`}
+          inviteLink={`https://www.jimmit.store/group/${id}`}
           onClose={() => setIsShareModalOpen(false)}
         />
       )}

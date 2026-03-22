@@ -31,11 +31,14 @@ interface InfinityScrollProps<T> {
   onInView: () => void;
   /** 더 불러올 데이터가 있는지 확인 */
   hasMore?: boolean;
-  // 정렬 css
+  /** 정렬 css */
   className?: string;
-  // 스크롤 타입
+  /** 스크롤 타입 */
   variant?: InfinityScrollVariant;
+  /** 최초 로딩 중 - 스켈레톤 표시해 레이아웃 시프트 방지 */
   isInitialLoading?: boolean;
+  /** 스켈레톤 렌더러 (grid일 때 isInitialLoading용) */
+  skeletonItem?: ReactNode;
 }
 
 export default function InfinityScroll<T extends { id: string | number }>({
@@ -46,6 +49,8 @@ export default function InfinityScroll<T extends { id: string | number }>({
   hasMore = true,
   className,
   variant = 'grid',
+  isInitialLoading = false,
+  skeletonItem,
 }: InfinityScrollProps<T>) {
   const [isFetching, setIsFetching] = useState(false);
   const { ref: observerRef, inView } = useInView({
@@ -67,6 +72,20 @@ export default function InfinityScroll<T extends { id: string | number }>({
 
   if (!list || (list.length === 0 && variant === 'comment')) {
     return null;
+  }
+
+  // 최초 로딩 시 스켈레톤 그리드 표시 → 레이아웃 시프트 방지
+  if (isInitialLoading && skeletonItem) {
+    const gridClassName =
+      className ??
+      'pc:grid-cols-4 grid grid-cols-1 pc:gap-x-5 gap-y-10 pc:px-0 tab:px-6 px-4';
+    return (
+      <div className={gridClassName}>
+        {[...Array(8)].map((_, i) => (
+          <div key={i}>{skeletonItem}</div>
+        ))}
+      </div>
+    );
   }
 
   if (!list || list.length === 0) {

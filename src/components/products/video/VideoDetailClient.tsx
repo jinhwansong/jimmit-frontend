@@ -239,7 +239,7 @@ export default function VideoDetailClient({ videoId }: prop) {
       </div>
       {open && videoId && (
         <ShareLinkModal
-          inviteLink={`https://jammit-fe-six.vercel.app/video/${videoId}`}
+          inviteLink={`https://www.jimmit.store/video/${videoId}`}
           onClose={() => setOpen(false)}
           text="내가 올린 영상을"
         />

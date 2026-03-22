@@ -1,5 +1,6 @@
 'use client';
 import CardItem from '@/components/commons/Card/CardItem';
+import SkeletonItem from '@/components/commons/Card/SkeletonItem';
 import InfinityScroll from '@/components/commons/InfinityScroll';
 import RecruitHeader from '@/components/commons/RecruitHeader';
 import ShareLinkModal from '@/components/products/group/ShareLinkModal';
@@ -36,7 +37,6 @@ export default function RecruitPage({
 
   const { data, fetchNextPage, hasNextPage, isFetching } =
     useCommonInfiniteQuery(filters);
-  console.log(data);
   const flatData = data?.pages.flatMap((page) => page.gatherings) ?? [];
 
   const handleModalClose = () => {
@@ -65,6 +65,7 @@ export default function RecruitPage({
         />
         <InfinityScroll
           isInitialLoading={isInitialLoading}
+          skeletonItem={<SkeletonItem />}
           list={flatData}
           item={(item, index) => (
             <CardItem
@@ -86,7 +87,7 @@ export default function RecruitPage({
 
       {isShareModalOpen && shareGroupId && (
         <ShareLinkModal
-          inviteLink={`https://jammit-fe-six.vercel.app/group/${shareGroupId}`}
+          inviteLink={`https://www.jimmit.store/group/${shareGroupId}`}
           onClose={handleModalClose}
         />
       )}

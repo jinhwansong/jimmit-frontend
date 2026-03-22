@@ -26,7 +26,7 @@ export async function generateMetadata({
     openGraph: {
       title: `JAMMIT · ${data.title}`,
       description: data.description,
-      url: `https://jammit-fe-six.vercel.app/video/${data.id}`,
+      url: `https://www.jimmit.store/video/${data.id}`,
       siteName: 'JAMMIT',
       type: 'video.other',
       images: data.thumbnailUrl,

@@ -2,7 +2,7 @@ import ShimmerSkeleton from '../ShimmerSkeleton';
 
 export default function SkeletonItem() {
   return (
-    <div>
+    <div className="min-h-[396px]">
       <ShimmerSkeleton className="pc:aspect-[8/5] tab:aspect-[87/25] aspect-[343/200] rounded-lg" />
       <div className="mt-[1.25rem] flex flex-wrap gap-[0.375rem]">
         {[...Array(4)].map((_, i) => (
