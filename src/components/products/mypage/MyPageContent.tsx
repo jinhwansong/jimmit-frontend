@@ -92,7 +92,6 @@ export default function MyPage() {
                 emptyText="참여 중인 모집이 없습니다."
               />
             )}
-            errorConfig={{ section: 'participating', action: 'participating' }}
           />
         ),
       },
@@ -109,7 +108,6 @@ export default function MyPage() {
                 emptyText="생성한 모집이 없습니다."
               />
             )}
-            errorConfig={{ section: 'created', action: 'created' }}
           />
         ),
       },

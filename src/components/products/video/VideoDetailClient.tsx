@@ -17,7 +17,6 @@ import {
 import { useDeviceType } from '@/hooks/useDeviceType';
 import { CommentRequest } from '@/types/video';
 import { formatDateToYYMMDD } from '@/utils/formatDate';
-import { useSentryErrorLogger } from '@/utils/useSentryErrorLogger';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
@@ -44,21 +43,14 @@ interface prop {
 export default function VideoDetailClient({ videoId }: prop) {
   const deviceType = useDeviceType();
   const [open, setOpen] = useState(false);
-  const { data, isLoading, isError, error } = useVideoDetailQuery({ videoId });
+  const { data, isLoading } = useVideoDetailQuery({ videoId });
   const {
     data: comment,
     fetchNextPage,
     hasNextPage,
     isFetching,
-    isError: isCommentError,
-    error: commentError,
   } = useCommentQuery({ take: 10, videoId });
-  const {
-    data: likeStatus,
-    isLoading: likeStatusLoading,
-    isError: isLikeError,
-    error: likeError,
-  } = useLikeStatus({
+  const { data: likeStatus, isLoading: likeStatusLoading } = useLikeStatus({
     videoId,
   });
   const { mutate: submitComment } = useCommentMutation(videoId);
@@ -93,27 +85,6 @@ export default function VideoDetailClient({ videoId }: prop) {
     submitComment(data.content);
     methods.reset();
   };
-  // 자동 Sentry 로깅
-  useSentryErrorLogger({
-    isError,
-    error,
-    tags: { section: 'video', action: 'detail' },
-    message: '비디오 상세 정보 불러오기 실패',
-  });
-
-  useSentryErrorLogger({
-    isError: isCommentError,
-    error: commentError,
-    tags: { section: 'video', action: 'comment' },
-    message: '댓글 불러오기 실패',
-  });
-
-  useSentryErrorLogger({
-    isError: isLikeError,
-    error: likeError,
-    tags: { section: 'video', action: 'likeStatus' },
-    message: '좋아요 상태 불러오기 실패',
-  });
   if (isLoading || likeStatusLoading) return <VideoDetailSkeleton />;
   return (
     <div className="pc:max-w-[84rem] pc:mt-6 pc:mb-36 tab:mb-11 mx-auto mb-6">

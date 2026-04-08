@@ -10,7 +10,9 @@
       "last 2 Edge versions",
       "last 2 Safari versions"
     ],
-    "development": ["last 1 Chrome version"]
+    "development": [
+      "last 1 Chrome version"
+    ]
   },
   "scripts": {
     "dev": "next dev",
@@ -30,7 +32,6 @@
     "@mux/mux-player-react": "^3.4.1",
     "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.3",
-    "@sentry/nextjs": "^10.36.0",
     "@tanstack/react-query": "^5.76.1",
     "@tanstack/react-query-devtools": "^5.79.0",
     "@testing-library/user-event": "^14.6.1",

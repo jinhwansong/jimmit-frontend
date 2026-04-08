@@ -41,7 +41,9 @@ export const reviewHandlers = [
 
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get('page') || '0');
-    const size = parseInt(url.searchParams.get('size') || '8');
+    const size = parseInt(
+      url.searchParams.get('pageSize') || url.searchParams.get('size') || '8',
+    );
 
     // 페이지네이션
     const totalElements = MOCK_RECEIVED_REVIEWS.length;

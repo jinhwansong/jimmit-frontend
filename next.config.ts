@@ -1,5 +1,4 @@
 import bundleAnalyzer from '@next/bundle-analyzer';
-import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 
 // 개발 환경에서 서버 사이드 MSW 시작
@@ -74,20 +73,4 @@ const withAnalyzer = bundleAnalyzer({
   openAnalyzer: false,
 });
 
-export default withSentryConfig(withAnalyzer(nextConfig), {
-  org: 'jimmit-fz',
-
-  project: 'javascript-nextjs',
-
-  silent: !process.env.CI,
-  widenClientFileUpload: true,
-  tunnelRoute: '/monitoring',
-
-  webpack: {
-    automaticVercelMonitors: true,
-
-    treeshake: {
-      removeDebugLogging: true,
-    },
-  },
-});
+export default withAnalyzer(nextConfig);

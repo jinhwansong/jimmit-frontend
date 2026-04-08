@@ -15,7 +15,6 @@ import { useWrittenReviewsQuery } from '@/hooks/queries/review/useWrittenReviews
 import { useQueryTab } from '@/hooks/useQueryTab';
 import { useUserStore } from '@/stores/useUserStore';
 import { imgChange } from '@/utils/imgChange';
-import { useSentryErrorLogger } from '@/utils/useSentryErrorLogger';
 
 import GroupPageLayout from '@/components/commons/GroupPageLayout';
 import ModalInteraction from '@/components/commons/Modal/ModalInteraction';
@@ -56,56 +55,25 @@ export default function GroupPage({
     }
   }, [activeTab, user, router, searchParams, isLoaded]);
 
-  const {
-    data: gatheringDetailData,
-    isLoading,
-    error,
-  } = useGatheringDetailQuery(groupId, {
-    initialData,
-  });
+  const { data: gatheringDetailData, isLoading } = useGatheringDetailQuery(
+    groupId,
+    { initialData },
+  );
 
   const isMembersTabQueryReady = isLoaded && !isRefreshing && !!user;
 
-  const {
-    data: participantsData,
-    isLoading: isParticipantsLoading,
-    error: participantsError,
-  } = useGatheringParticipantsQuery(groupId, {
-    enabled: isMembersTabQueryReady,
-  });
+  const { data: participantsData, isLoading: isParticipantsLoading } =
+    useGatheringParticipantsQuery(groupId, {
+      enabled: isMembersTabQueryReady,
+    });
 
-  const {
-    data: writtenReviewsData,
-    isLoading: isWrittenReviewLoading,
-    error: wittenReviewError,
-  } = useWrittenReviewsQuery({
-    enabled: isMembersTabQueryReady,
-  });
+  const { data: writtenReviewsData, isLoading: isWrittenReviewLoading } =
+    useWrittenReviewsQuery({
+      enabled: isMembersTabQueryReady,
+    });
 
   const participateMutation = useParticipateGatheringMutation();
   const cancelMutation = useCancelParticipateGatheringMutation();
-
-  // 에러로깅
-  useSentryErrorLogger({
-    isError: !!error,
-    error,
-    tags: { section: 'gather', action: 'fetch_detail' },
-    extra: { gatheringId: groupId },
-  });
-
-  useSentryErrorLogger({
-    isError: !!participantsError,
-    error: participantsError,
-    tags: { section: 'gather', action: 'fetch_participants' },
-    extra: { gatheringId: groupId },
-  });
-
-  useSentryErrorLogger({
-    isError: !!wittenReviewError,
-    error: wittenReviewError,
-    tags: { section: 'gather', action: 'fetch_written_reviews' },
-    extra: { gatheringId: groupId },
-  });
 
   if (isRefreshing) {
     return <MemberTabSkeleton />;

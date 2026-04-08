@@ -1127,10 +1127,19 @@ export const MOCK_REGISTER_RESPONSE: RegisterGatheringsResponse = {
   id: 999,
   name: '새로 생성된 모임',
   message: '모임이 성공적으로 생성되었습니다.',
+  place: '서울',
+  description: '새 모임 설명',
   gatheringDateTime: '2024-12-25T19:00:00',
   recruitDeadline: '2024-12-20T23:59:59',
   thumbnail: '/images/card/img_card_pc_01.avif',
   status: 'RECRUITING',
+  genres: ['ROCK'],
+  sessions: [{ bandSession: 'VOCAL', recruitCount: 2, currentCount: 0 }],
+  creator: {
+    id: 1,
+    nickname: '호스트',
+    profileImagePath: '/images/ic_default_profile.svg',
+  },
 };
 
 // 모임 수정 응답 목데이터

@@ -1,4 +1,5 @@
 import { GatheringCard } from '@/types/card';
+import { GatheringDetailResponse } from '@/types/gathering';
 import { GenreType, BandSessionType, GatheringStatus } from './tags';
 
 export interface GatheringsResponse {
@@ -30,15 +31,9 @@ export interface RegisterGatheringsRequest {
   }[];
 }
 
-export interface RegisterGatheringsResponse {
-  id: number;
-  name: string;
-  message: string;
-  gatheringDateTime: string;
-  recruitDeadline: string;
-  thumbnail: string;
-  status: GatheringStatus;
-}
+export type RegisterGatheringsResponse = GatheringDetailResponse & {
+  message?: string;
+};
 
 export interface ModifiedGatheringsRequest {
   name: string;

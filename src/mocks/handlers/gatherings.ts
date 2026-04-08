@@ -1030,6 +1030,44 @@ export const gatheringsHandlers = [
     return HttpResponse.json(response);
   }),
 
+  http.get('*/gatherings/my/participations', ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return new HttpResponse(null, { status: 401 });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    if (!token.includes('mock')) {
+      return new HttpResponse(null, { status: 401 });
+    }
+
+    const url = new URL(request.url);
+    const page = parseInt(url.searchParams.get('page') || '0');
+    const size = parseInt(url.searchParams.get('size') || '8');
+    const includeCanceled = url.searchParams.get('includeCanceled') === 'true';
+
+    let filteredGatherings = MOCK_MY_ALL_PARTICIPATED_GATHERINGS;
+    if (!includeCanceled) {
+      filteredGatherings = filteredGatherings.filter(
+        (g) => g.status !== 'CANCELED',
+      );
+    }
+
+    const totalElements = filteredGatherings.length;
+    const totalPage = Math.ceil(totalElements / size);
+    const startIndex = page * size;
+    const endIndex = startIndex + size;
+    const paginatedGatherings = filteredGatherings.slice(startIndex, endIndex);
+
+    return HttpResponse.json({
+      gatherings: paginatedGatherings,
+      currentPage: page,
+      totalPage,
+      totalElements,
+    });
+  }),
+
   // 내가 참가한 모임 목록 (작성 가능한 리뷰용)
   http.get('*/gatherings/:gatheringId/participants/my', ({ request }) => {
     const authHeader = request.headers.get('Authorization');
@@ -1114,6 +1152,35 @@ export const gatheringsHandlers = [
     };
 
     return HttpResponse.json(response);
+  }),
+
+  http.get('*/gatherings/my/completed', ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return new HttpResponse(null, { status: 401 });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    if (!token.includes('mock')) {
+      return new HttpResponse(null, { status: 401 });
+    }
+
+    const completedGatherings = MOCK_MY_COMPLETED_GATHERINGS.filter(
+      (g) => g.status === 'COMPLETED',
+    ).map((g) => ({
+      id: g.id,
+      name: g.name,
+      thumbnail: g.thumbnail,
+      gatheringDateTime: g.gatheringDateTime,
+      place: g.place,
+      totalRecruit: g.totalRecruit,
+      totalCurrent: g.totalCurrent,
+      status: g.status,
+      hostNickname: g.creator.nickname,
+    }));
+
+    return HttpResponse.json(completedGatherings);
   }),
 
   // 내가 참가한 완료된 모임 목록

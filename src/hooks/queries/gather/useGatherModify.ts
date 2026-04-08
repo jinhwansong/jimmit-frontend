@@ -1,7 +1,6 @@
 import { putModifiedGatherings } from '@/lib/gathering/modified';
 import { useToastStore } from '@/stores/useToastStore';
 import { handleAuthApiError } from '@/utils/authApiError';
-import { logToSentry } from '@/utils/logToSentry';
 import { useMutation } from '@tanstack/react-query';
 
 export const useGatherModify = () =>
@@ -13,10 +12,6 @@ export const useGatherModify = () =>
     },
 
     onError: (error) => {
-      logToSentry(error, {
-        section: 'meeting',
-        action: 'modified_meeting',
-      });
       handleAuthApiError(error, '모임 수정에 실패했습니다.');
     },
   });

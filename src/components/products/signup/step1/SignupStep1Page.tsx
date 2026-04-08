@@ -7,7 +7,6 @@ import { useSendCodeMutation } from '@/hooks/queries/auth/useSendCodeMutation';
 import { useVerifyCodeMutation } from '@/hooks/queries/auth/useVerifyCodeMutation';
 import { checkEmailDuplicate } from '@/lib/auth/signup';
 import { useSignupStore } from '@/stores/useSignupStore';
-import * as Sentry from '@sentry/nextjs';
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -61,8 +60,7 @@ export default function SignUpStep1Page() {
       } else {
         setDuplicateMessage('사용 가능한 이메일입니다.');
       }
-    } catch (e) {
-      Sentry.captureException(e);
+    } catch {
       setDuplicateMessage('중복 검사 중 오류가 발생했습니다.');
       setIsDuplicate(null);
     } finally {

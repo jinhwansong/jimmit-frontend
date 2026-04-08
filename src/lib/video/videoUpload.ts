@@ -60,7 +60,5 @@ export const uploadVideo = async ({
 };
 
 export const gether = async (): Promise<GetGetherItem[]> => {
-  return apiClient.get<GetGetherItem[]>(
-    `/gatherings/{gatheringId}/participants/my/completed`,
-  );
+  return apiClient.get<GetGetherItem[]>(`/gatherings/my/completed`);
 };

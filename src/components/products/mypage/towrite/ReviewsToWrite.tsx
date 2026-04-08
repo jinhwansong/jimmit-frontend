@@ -5,24 +5,17 @@ import InfinityScroll from '@/components/commons/InfinityScroll';
 import { CARD_STATE } from '@/constants/card';
 import { useReviewToWriteInfiniteQuery } from '@/hooks/queries/review/usePrefetchReview';
 import { useUserStore } from '@/stores/useUserStore';
-import { useSentryErrorLogger } from '@/utils/useSentryErrorLogger';
 
 export default function ReviewsToWrite() {
   const { user, isLoaded, isRefreshing } = useUserStore();
   const isQueryReady = isLoaded && !isRefreshing && !!user;
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isError } =
+  const { data, fetchNextPage, hasNextPage, isFetching } =
     useReviewToWriteInfiniteQuery({
       size: 8,
       includeCanceled: false,
       enabled: isQueryReady,
     });
-  useSentryErrorLogger({
-    isError: !!isError,
-    error: isError,
-    tags: { section: 'review', action: 'write_reviews' },
-    extra: { userId: user?.id },
-  });
   if (!data) {
     return (
       <div className="pc:grid-cols-4 pc:gap-x-5 pc:px-0 tab:px-6 grid grid-cols-1 gap-y-10 px-4">

@@ -9,7 +9,6 @@ import { useUserMeQuery } from '@/hooks/queries/user/useUserMeQuery';
 import { useUserStore } from '@/stores/useUserStore';
 import { EditFormData } from '@/types/modal';
 import { handleAuthApiError } from '@/utils/authApiError';
-import { logToSentry } from '@/utils/logToSentry';
 import SkeletonUserCard from './SkeletonUserCard';
 import UserCardItem from './UserCardItem';
 
@@ -58,11 +57,6 @@ export default function UserCard() {
       setUser(updatedUser);
       setIsModalOpen(false);
     } catch (error) {
-      logToSentry(error, {
-        section: 'profile',
-        action: 'update',
-      });
-
       handleAuthApiError(error, '프로필 수정에 실패했습니다.');
     }
   };

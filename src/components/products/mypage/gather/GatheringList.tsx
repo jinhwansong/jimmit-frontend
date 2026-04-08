@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { GatheringCard } from '@/types/card';
 import { GatheringsResponse, GetUserGatheringsParams } from '@/types/gather';
-import { useSentryErrorLogger } from '@/utils/useSentryErrorLogger';
 import SkeletonGatheringList from './SkeletonGatheringList';
 import { useUserStore } from '@/stores/useUserStore';
 
@@ -29,10 +28,6 @@ interface GatheringListProps {
   onCountChange?: (count: number) => void;
   useHook: UseGatheringHook;
   renderComponent: React.ComponentType<RenderComponentProps>;
-  errorConfig?: {
-    section: string;
-    action: string;
-  };
 }
 
 export default function GatheringList({
@@ -40,7 +35,6 @@ export default function GatheringList({
   includeCanceled = true,
   useHook,
   renderComponent: RenderComponent,
-  errorConfig,
 }: GatheringListProps) {
   const [page, setPage] = useState(0);
   const [list, setList] = useState<GatheringCard[]>([]);
@@ -51,13 +45,7 @@ export default function GatheringList({
     () => ({ page, size, includeCanceled, enabled: isQueryReady }),
     [page, size, includeCanceled, isQueryReady],
   );
-  const { data, isError, error } = useHook(params);
-
-  useSentryErrorLogger({
-    isError: !!isError,
-    error: error,
-    tags: errorConfig,
-  });
+  const { data, isError } = useHook(params);
 
   useEffect(() => {
     if (data) {

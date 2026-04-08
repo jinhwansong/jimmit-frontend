@@ -68,12 +68,6 @@ export interface PostReviewRequest {
   isKeepingPromises: boolean;
 }
 
-export interface ReviewWriteResponse {
-  success: true;
-  code: number;
-  message: string;
-  result: GatheringReviewInfo[];
-}
 export interface GatheringReviewInfo {
   gatheringId: number;
   gatheringName: string;

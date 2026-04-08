@@ -1,9 +1,9 @@
 import { RecruitResponse } from '@/types/recruit';
-import { ReviewWriteResponse } from '@/types/review';
+import { GatheringReviewInfo } from '@/types/review';
 import { apiClient } from '@/utils/apiClient';
 
-export async function getReviewWrite(): Promise<ReviewWriteResponse> {
-  return await apiClient.get<ReviewWriteResponse>('/review/unwritten');
+export async function getReviewWrite(): Promise<GatheringReviewInfo[]> {
+  return await apiClient.get<GatheringReviewInfo[]>('/review/unwritten');
 }
 
 export async function getReviewWrites({
@@ -20,6 +20,6 @@ export async function getReviewWrites({
   params.append('page', pageParam.toString());
   params.append('size', size.toString());
   return await apiClient.get<RecruitResponse>(
-    `/gatherings/{gatheringId}/participants/my?${params.toString()}`,
+    `/gatherings/my/participations?${params.toString()}`,
   );
 }

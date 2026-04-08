@@ -13,7 +13,7 @@ export const getUserParticipantsGatherings = async ({
   }).toString();
 
   const result = await apiClient.get<GatheringsResponse>(
-    `/gatherings/{gatheringId}/participants/my?${query}`,
+    `/gatherings/my/participations?${query}`,
   );
   return result;
 };

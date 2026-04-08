@@ -5,7 +5,6 @@ import {
   RegisterGatheringsResponse,
 } from '@/types/gather';
 import { handleAuthApiError } from '@/utils/authApiError';
-import { logToSentry } from '@/utils/logToSentry';
 import { useMutation } from '@tanstack/react-query';
 
 export const useGatherRegister = () => {
@@ -19,10 +18,6 @@ export const useGatherRegister = () => {
       useToastStore.getState().show('모임이 성공적으로 생성되었습니다.');
     },
     onError: (error) => {
-      logToSentry(error, {
-        section: 'meeting',
-        action: 'create_meeting',
-      });
       handleAuthApiError(error, '모임생성에 실패했습니다.');
     },
   });

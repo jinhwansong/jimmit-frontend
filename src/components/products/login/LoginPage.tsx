@@ -7,7 +7,6 @@ import CheckboxEmpty from '@/assets/icons/ic_checkbox_empty.svg';
 import { useLoginMutation } from '@/hooks/queries/auth/useLoginMutaion';
 import { useToastStore } from '@/stores/useToastStore';
 import { handleAuthApiError } from '@/utils/authApiError';
-import { logToSentry } from '@/utils/logToSentry';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -56,10 +55,6 @@ export default function LoginPage() {
       router.push('/');
       reset();
     } catch (error) {
-      logToSentry(error, {
-        section: 'login',
-        action: 'login',
-      });
       handleAuthApiError(error, '로그인에 실패했습니다.');
     }
   };

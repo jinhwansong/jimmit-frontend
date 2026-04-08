@@ -65,7 +65,7 @@ interface Comment extends CommentPromise {
 
 export interface CommentResponse {
   totalCount: number;
-  totalPages: number;
+  totalPage: number;
   page: number;
   data: Comment[];
   message: string;

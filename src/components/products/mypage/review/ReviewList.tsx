@@ -2,7 +2,6 @@
 import InfinityScroll from '@/components/commons/InfinityScroll';
 import { useReviewInfiniteQuery } from '@/hooks/queries/review/useReviewInfiniteQuery';
 import { useUserStore } from '@/stores/useUserStore';
-import { useSentryErrorLogger } from '@/utils/useSentryErrorLogger';
 import ReviewItems from './ReviewItems';
 import SkeletonReviewList from './SkeletonReviewList';
 
@@ -10,17 +9,11 @@ export default function ReviewList() {
   const { user, isLoaded, isRefreshing } = useUserStore();
   const isQueryReady = isLoaded && !isRefreshing && !!user;
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isError } =
+  const { data, fetchNextPage, hasNextPage, isFetching } =
     useReviewInfiniteQuery({
       size: 8,
       enabled: isQueryReady,
     });
-  useSentryErrorLogger({
-    isError: !!isError,
-    error: isError,
-    tags: { section: 'review', action: 'my_reviews' },
-    extra: { userId: user?.id },
-  });
   if (!data) return <SkeletonReviewList />;
   const flatData = data?.pages.flatMap((page) => page.content) ?? [];
 

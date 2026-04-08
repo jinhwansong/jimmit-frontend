@@ -9,7 +9,6 @@ import {
 import { useAuthStore } from '@/stores/useAuthStore';
 import { CommentResponse, LikeStatus } from '@/types/video';
 import { handleAuthApiError } from '@/utils/authApiError';
-import { logToSentry } from '@/utils/logToSentry';
 import {
   QueryClient,
   useInfiniteQuery,
@@ -84,13 +83,6 @@ export const useLikeMutation = () => {
           context.previousLikeStatus,
         );
       }
-      logToSentry(error, {
-        section: 'video',
-        action: 'like',
-        extra: {
-          videoId: context?.videoId,
-        },
-      });
       handleAuthApiError(error, '좋아요 중 오류가 발생했습니다.');
     },
 
@@ -114,7 +106,7 @@ export const useCommentQuery = ({
     queryFn: ({ pageParam = 1 }) => getComment({ pageParam, take, videoId }),
     initialPageParam: 1,
     getNextPageParam: (lastPage: CommentResponse) =>
-      lastPage.page + 1 < lastPage.totalPages ? lastPage.page + 1 : undefined,
+      lastPage.page + 1 < lastPage.totalPage ? lastPage.page + 1 : undefined,
     staleTime: 1000 * 60 * 5,
   });
 };
@@ -130,15 +122,7 @@ export const useCommentMutation = (videoId: string, take = 10) => {
         exact: true,
       });
     },
-    onError: (error, variables) => {
-      logToSentry(error, {
-        section: 'video',
-        action: 'comment',
-        extra: {
-          videoId,
-          content: variables,
-        },
-      });
+    onError: (error) => {
       handleAuthApiError(error, '댓글작성 중 오류가 발생했습니다.');
     },
   });

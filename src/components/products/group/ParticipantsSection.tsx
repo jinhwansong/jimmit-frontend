@@ -11,7 +11,6 @@ import { useUserStore } from '@/stores/useUserStore';
 import { GatheringDetailResponse, Participant } from '@/types/gathering';
 import { ReviewItem } from '@/types/review';
 import { handleAuthApiError } from '@/utils/authApiError';
-import { logToSentry } from '@/utils/logToSentry';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -88,11 +87,6 @@ export default function ParticipantsSection({
         useToastStore.getState().show('리뷰가 성공적으로 작성되었습니다.');
       },
       onError: (error) => {
-        logToSentry(error, {
-          section: 'review',
-          action: 'create_review',
-        });
-
         handleAuthApiError(error, '리뷰 작성 중 오류가 발생했습니다.');
       },
     });

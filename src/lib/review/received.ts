@@ -14,7 +14,7 @@ export async function getReview({
 }): Promise<ReviewResponse> {
   const params = new URLSearchParams();
   params.append('page', pageParam.toString());
-  params.append('size', size.toString());
+  params.append('pageSize', size.toString());
   return await apiClient.get<ReviewResponse>(
     `/review/received?${params.toString()}`,
   );
