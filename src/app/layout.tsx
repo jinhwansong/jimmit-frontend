@@ -5,7 +5,6 @@ import '@/styles/globals.css';
 import { Metadata } from 'next';
 import PreloadResources from './preload/resources';
 import Providers from './providers';
-import { MSWComponent } from '@/providers/MSWComponent';
 
 export const metadata: Metadata = {
   title: 'JAMMIT - 밴드 모임 플랫폼',
@@ -51,11 +50,9 @@ export default function RootLayout({
         <div id="modal-root">
           <GlobalErrorModalProvider />
           <Toast />
-          <MSWComponent>
-            <Providers>
-              <Layout>{children}</Layout>
-            </Providers>
-          </MSWComponent>
+          <Providers>
+            <Layout>{children}</Layout>
+          </Providers>
         </div>
       </body>
     </html>

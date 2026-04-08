@@ -1,11 +1,6 @@
 import bundleAnalyzer from '@next/bundle-analyzer';
 import type { NextConfig } from 'next';
 
-// 개발 환경에서 서버 사이드 MSW 시작
-if (process.env.NODE_ENV === 'development') {
-  require('./src/mocks/server-start'); // eslint-disable-line @typescript-eslint/no-require-imports
-}
-
 const nextConfig: NextConfig = {
   async headers() {
     return [
